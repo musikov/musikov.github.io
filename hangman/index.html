@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Просьба такое не оставлять после себя.</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .wrapper {
+            height: 100%;
+            background: url(bg.jpg);
+            background-repeat: no-repeat;
+            background-size: auto 100%;
+            background-position: 50%;
+        }
+        .legs {
+            position: absolute;
+            right: calc(50% - 30vh);
+            height: 30%;
+            top: -3%;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -30%;
+                transform: rotate(0);
+            }
+            80% {
+                top: -3%;
+                transform: rotate(0);
+            }
+            100% {
+                top: -3%;
+            }
+        }
+
+        .fall {
+            animation-name: fall;
+            animation-duration: 500ms;
+            animation-timing-function: cubic-bezier(0.615, 0.120, 0.460, 1.255);
+        }
+
+        @keyframes hang {
+            0% {transform: rotate(10deg)}
+            50% {transform: rotate(-10deg)}
+            100% {transform: rotate(10deg)}
+        }
+
+        .hang {
+            transform-origin: top center;
+            animation-name: hang;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+            /*animation-timing-function: cubic-bezier(0.615, 0.120, 0.460, 1.255)*/
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <img class="legs hang" src="legs.png">
+    </div>
+</body>
+</html>
