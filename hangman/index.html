@@ -49,15 +49,15 @@
         }
 
         @keyframes hang {
-            0% {transform: rotate(10deg)}
-            50% {transform: rotate(-10deg)}
-            100% {transform: rotate(10deg)}
+            0% {transform: rotate(0.5deg)}
+            50% {transform: rotate(-0.5deg)}
+            100% {transform: rotate(0.5deg)}
         }
 
         .hang {
-            transform-origin: top center;
+            transform-origin: 50% -500%;
             animation-name: hang;
-            animation-duration: 3s;
+            animation-duration: 4s;
             animation-iteration-count: infinite;
             /*animation-timing-function: cubic-bezier(0.615, 0.120, 0.460, 1.255)*/
         }
