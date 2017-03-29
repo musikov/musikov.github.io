@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Меня нашли</title>
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+    <meta name="description" content="Меня нашли" />
+    <meta property="og:title" content="Меня нашли" />
+    <meta property="og:description" content="Меня нашли" />
+    <meta property="og:image" content="og.jpg" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .wrapper {
+            height: 100%;
+            background: url(bg.png);
+            background-repeat: no-repeat;
+            background-size: auto 100%;
+            background-position: 50%;
+        }
+        .front {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: url(front.png);
+            background-repeat: no-repeat;
+            background-size: auto 100%;
+            background-position: 50%;
+        }
+        .legs {
+            position: absolute;
+            left: calc(50% - 75vh / 2);
+            height: 100%;
+            top: -3%;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -30%;
+                transform: rotate(0);
+            }
+            80% {
+                top: -3%;
+                transform: rotate(0);
+            }
+            100% {
+                top: -3%;
+            }
+        }
+
+        .fall {
+            animation-name: fall;
+            animation-duration: 500ms;
+            animation-timing-function: cubic-bezier(0.615, 0.120, 0.460, 1.255);
+        }
+
+        @keyframes hang {
+            0% {transform: rotate(0.5deg)}
+            50% {transform: rotate(-0.5deg)}
+            100% {transform: rotate(0.5deg)}
+        }
+
+        .hang {
+            transform-origin: 50% -500%;
+            animation-name: hang;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+            /*animation-timing-function: cubic-bezier(0.615, 0.120, 0.460, 1.255)*/
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <img class="legs hang" src="legs.png" ondragstart="event.preventDefault()">
+        <div class="front"></div>
+    </div>
+</body>
+</html>
