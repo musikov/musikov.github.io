@@ -138,7 +138,7 @@
                 let dY = config.reel.gapV + config.symbol.height;
                 upButton.onclick = () => {
                     createjs.Tween.get(reel, {override: true})
-                        .to({y: -dY}, Math.abs(Math.abs(reel.y) - Math.abs(dY)) / dY * 500)
+                        .to({y: -dY}, Math.abs(dY + reel.y) / dY * 500)
                         .to({y: 0})
                         .call(() => {
                             let child = reel.children[0];
@@ -159,7 +159,7 @@
                 };
                 downButton.onclick = () => {
                     createjs.Tween.get(reel, {override: true})
-                        .to({y: dY}, Math.abs(Math.abs(reel.y) - Math.abs(dY)) / dY * 500)
+                        .to({y: dY}, Math.abs(dY - reel.y) / dY * 500)
                         .to({y: 0})
                         .call(() => {
                             let child = reel.children[reel.children.length - 1];
@@ -202,12 +202,12 @@
         initConfig();
 
         updateConfig();
-        window.b= board;
+        window.b = board;
     }
 
     function initDrop() {
         function handleFile(f) {
-            if (f.type === 'image/png' || f.type === 'image/jpg') {
+            if (f.type === 'image/png' || f.type === 'image/jpeg') {
                 let reader = new window.FileReader();
                 reader.readAsDataURL(f);
                 reader.onloadend = function() {
@@ -239,7 +239,7 @@
             let dt = event.dataTransfer;
             if (dt.items) {
                 // Use DataTransferItemList interface to access the file(s)
-                for (let i=0; i < dt.items.length; ++i) {
+                for (let i = 0; i < dt.items.length; ++i) {
                     if (dt.items[i].kind === 'file') {
                         let f = dt.items[i].getAsFile();
                         handleFile(f);
@@ -247,10 +247,7 @@
                 }
             } else {
                 // Use DataTransfer interface to access the file(s)
-                for (let i=0; i < dt.files.length; ++i) {
-                    // debugger
-                    // console.log("... file[" + i + "].name = " + dt.files[i].name);
-
+                for (let i = 0; i < dt.files.length; ++i) {
                     let f = dt.files[i];
                     handleFile(f);
                 }
