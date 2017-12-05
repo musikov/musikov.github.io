@@ -206,8 +206,30 @@
     }
 
     function initDrop() {
-        let dropZone = document.querySelector('.dropzone');
-         dropZone = document.querySelector('body');
+        function handleFile(f) {
+            if (f.type === 'image/png' || f.type === 'image/jpg') {
+                let reader = new window.FileReader();
+                reader.readAsDataURL(f);
+                reader.onloadend = function() {
+                    let src = reader.result;
+                    let img = new Image();
+                    img.onload = function(){
+                        if (img.width > 500) {
+                            // assume its bg
+                            textures.bg = src;
+                            updateConfig();
+                        } else {
+                            textures.symbols = textures.symbols || [];
+                            textures.symbols.push(src);
+                            updateConfig();
+                        }
+                    };
+                    img.src = src;
+                }
+            }
+        }
+
+        let dropZone = document.querySelector('body');
         dropZone.ondragover = function(event) {
             event.preventDefault();
         };
@@ -220,34 +242,18 @@
                 for (let i=0; i < dt.items.length; ++i) {
                     if (dt.items[i].kind === 'file') {
                         let f = dt.items[i].getAsFile();
-                        if (f.type === 'image/png' || f.type === 'image/jpg') {
-                            let reader = new window.FileReader();
-                            reader.readAsDataURL(f);
-                            reader.onloadend = function() {
-                                let src = reader.result;
-                                let img = new Image();
-                                img.onload = function(){
-                                    if (img.width > 500) {
-                                        // assume its bg
-                                        textures.bg = src;
-                                        updateConfig();
-                                    } else {
-                                        textures.symbols = textures.symbols || [];
-                                        textures.symbols.push(src);
-                                        updateConfig();
-                                    }
-                                };
-                                img.src = src;
-                            }
-                        }
+                        handleFile(f);
                     }
                 }
             } else {
-                console.error('drop not supported');
                 // Use DataTransfer interface to access the file(s)
-                // for (let i=0; i < dt.files.length; ++i) {
-                //     console.log("... file[" + i + "].name = " + dt.files[i].name);
-                // }
+                for (let i=0; i < dt.files.length; ++i) {
+                    // debugger
+                    // console.log("... file[" + i + "].name = " + dt.files[i].name);
+
+                    let f = dt.files[i];
+                    handleFile(f);
+                }
             }
 
         }
