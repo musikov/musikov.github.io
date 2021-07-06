@@ -1,0 +1,19 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <style>
+        @media only screen and (orientation: landscape) {
+            iframe {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+<div>
+    This page crashes on Chrome 90, 91 on returning to landscape<br/>
+    Rotate your <u>mobile</u> device to portrait and back to landscape.
+</div>
+<iframe srcdoc="<html><body><svg><text>Hello</text></svg></body></html>"></iframe>
+</body>
+</html>
