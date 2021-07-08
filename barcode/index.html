@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Barcode</title>
+    <style>
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+        }
+        td {
+            border: 1px solid black;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .item {
+            display: flex;
+        }
+        .item__description {
+            width: 33%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            font-size: 17pt;
+            font-family: sans-serif;
+        }
+
+        .item__barcode {
+            width: 67%;
+        }
+        .item__barcode img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        form label {
+            width: 150px;
+            display: inline-block;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="no-print">
+    <form action="" method="GET">
+        <div><label>Ширина:</label><input type="number" name="w" step="0.01"></div>
+        <div><label>Висота:</label><input type="number" name="h" step="0.01"></div>
+        <div><label>Код:</label><input type="number" name="c"></div>
+        <div><label>Артикул:</label><input type="text" name="n"></div>
+        <div><label>Текст:</label><input type="text" name="t"></div>
+        <div><label>Розмір артикула:</label><input type="number" name="ns"></div>
+        <div><label>Розмір текста:</label><input type="number" name="ts"></div>
+        <div><label>Стовпчики:</label><input type="number" name="columns"></div>
+        <div><label>Колонки:</label><input type="number" name="rows"></div>
+        <div><input type="submit"></div>
+    </form>
+</div>
+<div>
+    <table>
+    </table>
+</div>
+<div class='no-print'
+     style='padding-top:8px; text-align:center; font-size:15px; font-family: Source Sans Pro, Arial, sans-serif;'>
+    <!-- back-linking to www.tec-it.com is required -->
+    <a href='https://www.tec-it.com' title='Barcode Software by TEC-IT' target='_blank'>
+        TEC-IT Barcode Generator<br/>
+    </a>
+</div>
+
+<script>
+    (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        var config = {
+            width: urlParams.get('w'),
+            height: urlParams.get('h'),
+            code: urlParams.get('c'),
+            number: urlParams.get('n'),
+            text: urlParams.get('t'),
+            numberSize: urlParams.get('ns'),
+            textSize: urlParams.get('ts'),
+            columns: urlParams.get('columns'),
+            rows: urlParams.get('rows'),
+        }
+        var defaultConfig = {
+            width: 8,
+            height: 2.7,
+            code: '4012428006430',
+            number: '00643',
+            text: 'Mini AC',
+            numberSize: 17,
+            textSize: 17,
+            columns: 2,
+            rows: 10,
+        }
+
+        for (var i in config) {
+            if (!config.hasOwnProperty(i)) continue;
+            config[i] = config[i] || defaultConfig[i];
+        }
+
+        if (config.code && config.code.replace) {
+            config.code = config.code.replace(/ /g, '');
+        }
+
+        document.querySelector('[name="w"]').value = config.width;
+        document.querySelector('[name="h"]').value = config.height;
+        document.querySelector('[name="c"]').value = config.code;
+        document.querySelector('[name="n"]').value = config.number;
+        document.querySelector('[name="t"]').value = config.text;
+        document.querySelector('[name="ns"]').value = config.numberSize;
+        document.querySelector('[name="ts"]').value = config.textSize;
+        document.querySelector('[name="columns"]').value = config.columns;
+        document.querySelector('[name="rows"]').value = config.rows;
+
+        function drawBarcode(table) {
+            var img = `<img alt='' src='https://barcode.tec-it.com/barcode.ashx?data=${config.code}&code=EAN13&multiplebarcodes=false&translate-esc=false&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&codepage=Default&qunit=Mm&quiet=0&hidehrt=False'/>`;
+            var singleItem = `<td style="width: ${config.width}cm; height: ${config.height}cm;">
+<div class="item">
+<div class="item__description"><div><span style="font-size: ${config.numberSize}pt">${config.number}</span><br/><span style="font-size: ${config.textSize}pt">${config.text}</span></div></div>
+<div class="item__barcode">${img}</div>
+</div>
+</td>`;
+            var html = '';
+            for (var i = 0; i < config.rows; ++i) {
+                html += '<tr>';
+
+                for (var c = 0; c < config.columns; ++c) {
+                    html += singleItem;
+                }
+
+                html += '</tr>\n';
+            }
+            table.innerHTML = html;
+        }
+        if (config.width && config.height && config.code) {
+            drawBarcode(document.querySelector('table'));
+        }
+    })();
+</script>
+</body>
+</html>
