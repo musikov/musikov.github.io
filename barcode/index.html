@@ -50,6 +50,11 @@
             .no-print {
                 display: none;
             }
+
+            html, body {
+                margin: 0;
+                padding: 0;
+            }
         }
     </style>
 </head>
@@ -129,6 +134,8 @@
         document.querySelector('[name="ts"]').value = config.textSize;
         document.querySelector('[name="columns"]').value = config.columns;
         document.querySelector('[name="rows"]').value = config.rows;
+
+        document.title = 'Barcode_' + config.number;
 
         function drawBarcode(table) {
             var img = `<img alt='' src='https://barcode.tec-it.com/barcode.ashx?data=${config.code}&code=EAN13&multiplebarcodes=false&translate-esc=false&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&codepage=Default&qunit=Mm&quiet=0&hidehrt=False'/>`;
