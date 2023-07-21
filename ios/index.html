@@ -8,6 +8,12 @@
        .lorem {
            color: lightgray
        }
+       :root {
+           --sat: env(safe-area-inset-top);
+           --sar: env(safe-area-inset-right);
+           --sab: env(safe-area-inset-bottom);
+           --sal: env(safe-area-inset-left);
+       }
     </style>
 </head>
 <body>
@@ -32,6 +38,7 @@
     <script>
         var text = document.getElementById('out');
         setInterval(function() {
+            var computedStyle = getComputedStyle(document.documentElement);
     		var obj = {
     		    devicePixelRatio: window.devicePixelRatio,
     		    innerWidth: window.innerWidth,
@@ -41,6 +48,10 @@
     			'navigator.userAgent': navigator.userAgent,
     			'navigator.appVersion': navigator.appVersion,
     			'navigator.vendor': navigator.vendor,
+                'safe-area-inset-top': computedStyle.getPropertyValue("--sat"),
+                'safe-area-inset-right': computedStyle.getPropertyValue("--sar"),
+                'safe-area-inset-bottom': computedStyle.getPropertyValue("--sab"),
+                'safe-area-inset-left': computedStyle.getPropertyValue("--sal"),
     		};
         	text.innerText = JSON.stringify(obj, null, 4);
         }, 1000 / 60);
