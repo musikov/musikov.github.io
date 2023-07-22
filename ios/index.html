@@ -39,21 +39,19 @@
         var text = document.getElementById('out');
         setInterval(function() {
             var computedStyle = getComputedStyle(document.documentElement);
-    		var obj = {
-    		    devicePixelRatio: window.devicePixelRatio,
-    		    innerWidth: window.innerWidth,
-    		    innerHeight: window.innerHeight,
-    		    'window.screen.width': window.screen.width,
-    		    'window.screen.height': window.screen.height,
-    			'navigator.userAgent': navigator.userAgent,
-    			'navigator.appVersion': navigator.appVersion,
-    			'navigator.vendor': navigator.vendor,
-                'safe-area-inset-top': computedStyle.getPropertyValue("--sat"),
-                'safe-area-inset-right': computedStyle.getPropertyValue("--sar"),
-                'safe-area-inset-bottom': computedStyle.getPropertyValue("--sab"),
-                'safe-area-inset-left': computedStyle.getPropertyValue("--sal"),
-    		};
-        	text.innerText = JSON.stringify(obj, null, 4);
+            var safeAreaInset = `${computedStyle.getPropertyValue("--sat")} ${computedStyle.getPropertyValue("--sar")} ${computedStyle.getPropertyValue("--sab")} ${computedStyle.getPropertyValue("--sal")}`;
+            var obj = {
+                devicePixelRatio: window.devicePixelRatio,
+                innerWidth: window.innerWidth,
+                innerHeight: window.innerHeight,
+                'window.screen.width': window.screen.width,
+                'window.screen.height': window.screen.height,
+                'navigator.userAgent': navigator.userAgent,
+                'navigator.appVersion': navigator.appVersion,
+                'navigator.vendor': navigator.vendor,
+                'safe-area-inset': safeAreaInset,
+            };
+            text.innerText = JSON.stringify(obj, null, 4);
         }, 1000 / 60);
     </script>
 </body>
